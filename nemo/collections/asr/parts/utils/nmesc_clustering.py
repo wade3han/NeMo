@@ -430,7 +430,7 @@ def getMultiScaleCosAffinityMatrix(uniq_embs_and_timestamps: dict, device: torch
     for scale_idx in sorted(uniq_scale_dict.keys()):
         mapping_argmat = session_scale_mapping_dict[scale_idx]
         emb_t = uniq_scale_dict[scale_idx]['embeddings'].half().to(device)
-        score_mat_torch = getCosAffinityMatrix(emb_t)
+        score_mat_torch = getCosAffinityMatrix(emb_t)  # check
         repeat_list = getRepeatedList(mapping_argmat, torch.tensor(score_mat_torch.shape[0])).to(device)
         repeated_tensor_0 = torch.repeat_interleave(score_mat_torch, repeats=repeat_list, dim=0)
         repeated_tensor_1 = torch.repeat_interleave(repeated_tensor_0, repeats=repeat_list, dim=1)
@@ -882,7 +882,7 @@ class NMESC:
         est_spk_n_dict: Dict[int, torch.Tensor] = {}
         self.p_value_list = self.getPvalueList()
         for p_value in self.p_value_list:
-            est_num_of_spk, g_p = self.getEigRatio(p_value)
+            est_num_of_spk, g_p = self.getEigRatio(p_value)  # ?
             est_spk_n_dict[p_value.item()] = est_num_of_spk
             eig_ratio_list.append(g_p)
             est_num_of_spk_list.append(est_num_of_spk)
